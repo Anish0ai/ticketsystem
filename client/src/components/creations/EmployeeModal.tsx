@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { api } from "../../api/api";
-import ModalWrapper from "../common/ModalWrapper";
-import React from "react";
+import API from "../../services/api";
+import ModalWrapper from "../common/modalwrapper";
 
 const EmployeeModal = ({ onClose }: any) => {
   const [form, setForm] = useState({
@@ -12,7 +11,7 @@ const EmployeeModal = ({ onClose }: any) => {
   });
 
   const submit = async () => {
-    await api.post("/employees", form);
+    await API.post("/employees", form);
     alert("Employee Created");
     onClose();
   };

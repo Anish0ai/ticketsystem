@@ -1,9 +1,8 @@
 import { useState } from "react";
-import ModalWrapper from "../common/ModalWrapper";
+import ModalWrapper from "../common/modalwrapper";
 import Input from "../common/Input";
 import Button from "../common/Button";
-import { api } from "../../api/api";
-import React from "react";
+import API from "../../services/api";
 
 interface Props {
   onClose: () => void;
@@ -14,7 +13,7 @@ const IssueTypeModal: React.FC<Props> = ({ onClose }) => {
 
   const handleSubmit = async () => {
     try {
-      await api.post("/issue-type", { name });
+      await API.post("/issue-type", { name });
       alert("Issue Type Created ✅");
       onClose();
     } catch (error) {

@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { api } from "../../api/api";
-import ModalWrapper from "../common/ModalWrapper";
-import React from "react";
+import API from "../../services/api";
+import ModalWrapper from "../common/modalwrapper";
 
 const RoleModal = ({ onClose }: any) => {
   const [role, setRole] = useState("");
 
   const submit = async () => {
-    await api.post("/roles", { name: role });
+    await API.post("/roles", { name: role });
     onClose();
   };
 

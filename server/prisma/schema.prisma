@@ -1,0 +1,112 @@
+// Prisma Schema for Ticket System
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ────────────────────────────────────────────────
+
+enum Role {
+  Admin
+  Developer
+  Designer
+  QA
+  Manager
+}
+
+enum TicketStatus {
+  Open
+  InProgress
+  Review
+  Closed
+}
+
+enum Priority {
+  Low
+  Medium
+  High
+}
+
+enum TicketType {
+  Bug
+  Enhancement
+  Task
+  Feature
+}
+
+enum Platform {
+  Web
+  Mobile
+  Desktop
+  API
+}
+
+// ─── Models ───────────────────────────────────────────────
+
+model User {
+  id    Int    @id @default(autoincrement())
+  name  String
+  email String @unique
+  role  Role   @default(Developer)
+
+  createdTickets  Ticket[] @relation("TicketCreator")
+  assignedTickets Ticket[] @relation("TicketAssignee")
+  comments        Comment[]
+  projects        Project[] @relation("ProjectMembers")
+
+  createdAt DateTime @default(now())
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  platform    Platform @default(Web)
+  techStack   String[]
+
+  tickets Ticket[]
+  members User[] @relation("ProjectMembers")
+
+  createdAt DateTime @default(now())
+}
+
+model Ticket {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String?
+  status      TicketStatus @default(Open)
+  priority    Priority     @default(Medium)
+  type        TicketType   @default(Bug)
+  platform    Platform     @default(Web)
+
+  project   Project @relation(fields: [projectId], references: [id])
+  projectId Int
+
+  creator   User @relation("TicketCreator", fields: [creatorId], references: [id])
+  creatorId Int
+
+  assignedTo   User? @relation("TicketAssignee", fields: [assignedToId], references: [id])
+  assignedToId Int?
+
+  comments Comment[]
+
+  createdAt DateTime @default(now())
+}
+
+model Comment {
+  id   Int    @id @default(autoincrement())
+  text String
+
+  ticket   Ticket @relation(fields: [ticketId], references: [id])
+  ticketId Int
+
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
+
+  createdAt DateTime @default(now())
+}

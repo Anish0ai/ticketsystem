@@ -1,28 +1,34 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { TicketProvider } from "./context/TicketContext";
 import Layout from "./layout/Layout";
 import Dashboard from "./components/Dashboard";
+import TicketHub from "./components/TicketHub";
+import TicketDetail from "./components/TicketDetail";
+import KanbanBoard from "./components/KanbanBoard";
+import ProjectDirectory from "./components/ProjectDirectory";
+import ProjectDetail from "./components/ProjectDetail";
+import CreationsPanel from "./components/CreationsPanel";
 
-const Tickets = () => <div>Tickets Page</div>;
 const NewTicket = () => <div>New Ticket Page</div>;
-const Projects = () => <div>Projects Page</div>;
-const Creations = () => <div>Creations Page</div>;
 
 function App() {
   return (
-    <Router>
-      <Routes>
-
-        {/* Layout Wrapper */}
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="tickets" element={<Tickets />} />
-          <Route path="new-ticket" element={<NewTicket />} />
-          <Route path="projects" element={<Projects />} />
-          <Route path="creations" element={<Creations />} />
-        </Route>
-
-      </Routes>
-    </Router>
+    <TicketProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="tickets" element={<TicketHub />} />
+            <Route path="tickets/:id" element={<TicketDetail />} />
+            <Route path="kanban" element={<KanbanBoard />} />
+            <Route path="new-ticket" element={<NewTicket />} />
+            <Route path="projects" element={<ProjectDirectory />} />
+            <Route path="projects/:id" element={<ProjectDetail />} />
+            <Route path="creations" element={<CreationsPanel />} />
+          </Route>
+        </Routes>
+      </Router>
+    </TicketProvider>
   );
 }
 

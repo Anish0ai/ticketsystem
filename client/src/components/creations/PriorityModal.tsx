@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { api } from "../../api/api";
-import ModalWrapper from "../common/ModalWrapper";
-import React from "react";
+import API from "../../services/api";
+import ModalWrapper from "../common/modalwrapper";
 
 const PriorityModal = ({ onClose }: any) => {
   const [form, setForm] = useState({ name: "", color: "" });
 
   const submit = async () => {
-    await api.post("/priority", form);
+    await API.post("/priority", form);
     onClose();
   };
 
