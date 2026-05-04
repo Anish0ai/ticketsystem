@@ -5,8 +5,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
+      // During local dev, forward /api requests to the Express server
       "/api": {
-        target: "https://ticketsystem-4ygo.vercel.app/",
+        target: "http://localhost:3001",
         changeOrigin: true,
         secure: false,
       },
