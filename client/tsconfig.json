@@ -1,12 +1,6 @@
-
 {
-  "compilerOptions": {
-    "jsx": "react",
-    "target": "ES6",
-    "module": "commonjs",
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "esModuleInterop": true,
-    "strict": true
-  }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" }
+  ]
 }
