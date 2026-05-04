@@ -6,7 +6,12 @@ const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
+
+
 
 const connectDB = async () => {
   try {
@@ -14,7 +19,7 @@ const connectDB = async () => {
     console.log("PostgreSQL connected successfully");
     client.release();
   } catch (err) {
-    console.error("PostgreSQL connection error:", err.Error);
+    console.error("PostgreSQL connection error:", err);
     process.exit(1);
   }
 };
